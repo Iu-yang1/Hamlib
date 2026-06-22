@@ -267,6 +267,7 @@ int newcat_get_ext_level(RIG *rig, vfo_t vfo, hamlib_token_t token, value_t *val
 
 int newcat_send_morse(RIG *rig, vfo_t vfo, const char *msg);
 int newcat_send_voice_mem(RIG *rig, vfo_t vfo, int ch);
+int newcat_stop_voice_mem(RIG *rig, vfo_t vfo);
 int newcat_set_clock(RIG *rig, int year, int month, int day, int hour, int min,
                      int sec, double msec, int utc_offset);
 int newcat_get_clock(RIG *rig, int *year, int *month, int *day, int *hour,

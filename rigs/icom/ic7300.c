@@ -129,6 +129,20 @@ int ic9700_set_vfo(RIG *rig, vfo_t vfo);
          { 241, 25.0f } \
     } }
 
+static const struct ts_sc_list ic7300_ts_sc_list[] =
+{
+    {1, 0x00},            /* Manual says "Send/read the tuning step OFF" */
+    {100, 0x01},
+    {kHz(1), 0x02},
+    {kHz(5), 0x03},
+    {kHz(9), 0x04},
+    {kHz(10), 0x05},
+    {kHz(12.5), 0x06},
+    {kHz(20), 0x07},
+    {kHz(25), 0x08},
+    {0, 0},
+};
+
 
 /*
  * IC905 items that differ from IC7300
@@ -191,6 +205,25 @@ int ic9700_set_vfo(RIG *rig, vfo_t vfo);
          { 0, 0.0f }, \
          { 241, 4.0f } \
     } }
+
+static const struct ts_sc_list ic705_ts_sc_list[] =
+{
+    {10, 0x00},
+    {100, 0x01},
+    {500, 0x02},
+    {kHz(1), 0x03},
+    {kHz(5), 0x04},
+    {kHz(6.25), 0x05},
+    {kHz(8.33), 0x06},
+    {kHz(9), 0x07},
+    {kHz(10), 0x08},
+    {kHz(12.5), 0x09},
+    {kHz(20), 0x10},
+    {kHz(25), 0x11},
+    {kHz(50), 0x12},
+    {kHz(100), 0x13},
+    {0, 0},
+};
 
 /*
  * IC9700 items that differ from IC7300
@@ -270,7 +303,24 @@ int ic9700_set_vfo(RIG *rig, vfo_t vfo);
          { 241, 20.0f } \
     } }
 
-static struct cmdparams ic7300_extcmds[] =
+static const struct ts_sc_list ic9700_ts_sc_list[] =
+{
+    {10, 0x00},
+    {100, 0x01},
+    {500, 0x02},
+    {kHz(1), 0x03},
+    {kHz(5), 0x04},
+    {kHz(6.25), 0x05},
+    {kHz(10), 0x06},
+    {kHz(12.5), 0x07},
+    {kHz(20), 0x08},
+    {kHz(25), 0x09},
+    {kHz(50), 0x10},
+    {kHz(100), 0x11},
+    {0, 0},
+};
+
+static const struct cmdparams ic7300_extcmds[] =
 {
     { {.s = RIG_PARM_ANN}, CMD_PARAM_TYPE_PARM, C_CTL_ANN, 0, SC_MOD_WR, 0, {0x00}, CMD_DAT_INT, 1 },
     { {.s = RIG_PARM_BEEP}, CMD_PARAM_TYPE_PARM, C_CTL_MEM, S_MEM_PARM, SC_MOD_RW, 2, {0x00, 0x23}, CMD_DAT_BOL, 1 },
@@ -287,7 +337,7 @@ static struct cmdparams ic7300_extcmds[] =
     { {.s = RIG_PARM_NONE} }
 };
 
-static struct cmdparams ic7300mk2_extcmds[] =
+static const struct cmdparams ic7300mk2_extcmds[] =
 {
     { {.s = RIG_PARM_ANN}, CMD_PARAM_TYPE_PARM, C_CTL_ANN, 0, SC_MOD_WR, 0, {0x00}, CMD_DAT_INT, 1 },
     { {.s = RIG_PARM_BEEP}, CMD_PARAM_TYPE_PARM, C_CTL_MEM, S_MEM_PARM, SC_MOD_RW, 2, {0x00, 0x24}, CMD_DAT_BOL, 1 },
@@ -304,7 +354,7 @@ static struct cmdparams ic7300mk2_extcmds[] =
     { {.s = RIG_PARM_NONE} }
 };
 
-static struct cmdparams ic9700_extcmds[] =
+static const struct cmdparams ic9700_extcmds[] =
 {
     { {.s = RIG_PARM_ANN}, CMD_PARAM_TYPE_PARM, C_CTL_ANN, 0, SC_MOD_WR, 0, {0x00}, CMD_DAT_INT, 1 },
     { {.s = RIG_PARM_BEEP}, CMD_PARAM_TYPE_PARM, C_CTL_MEM, S_MEM_PARM, SC_MOD_RW, 2, {0x00, 0x29}, CMD_DAT_BOL, 1 },
@@ -322,7 +372,7 @@ static struct cmdparams ic9700_extcmds[] =
     { {.s = RIG_PARM_NONE} }
 };
 
-static struct cmdparams ic705_extcmds[] =
+static const struct cmdparams ic705_extcmds[] =
 {
     { {.s = RIG_PARM_ANN}, CMD_PARAM_TYPE_PARM, C_CTL_ANN, 0, SC_MOD_WR, 0, {0x00}, CMD_DAT_INT, 1 },
     { {.s = RIG_PARM_BEEP}, CMD_PARAM_TYPE_PARM, C_CTL_MEM, S_MEM_PARM, SC_MOD_RW, 2, {0x00, 0x31}, CMD_DAT_BOL, 1 },
@@ -339,7 +389,7 @@ static struct cmdparams ic705_extcmds[] =
     { {.s = RIG_PARM_NONE} }
 };
 
-static struct cmdparams ic905_extcmds[] =
+static const struct cmdparams ic905_extcmds[] =
 {
     { {.s = RIG_PARM_ANN}, CMD_PARAM_TYPE_PARM, C_CTL_ANN, 0, SC_MOD_WR, 0, {0x00}, CMD_DAT_INT, 1 },
     { {.s = RIG_PARM_BEEP}, CMD_PARAM_TYPE_PARM, C_CTL_MEM, S_MEM_PARM, SC_MOD_RW, 2, {0x00, 0x33}, CMD_DAT_BOL, 1 },

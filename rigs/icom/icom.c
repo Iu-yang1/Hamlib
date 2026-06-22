@@ -282,16 +282,6 @@ const struct ts_sc_list ic718_ts_sc_list[] =
     {0, 0},
 };
 
-const struct ts_sc_list ic756_ts_sc_list[] =
-{
-    {10, 0x00},
-    {kHz(1), 0x01},
-    {kHz(5), 0x02},
-    {kHz(9), 0x03},
-    {kHz(10), 0x04},
-    {0, 0},
-};
-
 const struct ts_sc_list ic756pro_ts_sc_list[] =
 {
     {10, 0x00},           /* 1 if step turned off */
@@ -318,22 +308,6 @@ const struct ts_sc_list ic706_ts_sc_list[] =
     {kHz(20), 0x07},
     {kHz(25), 0x08},
     {kHz(100), 0x09},
-    {0, 0},
-};
-
-const struct ts_sc_list ic7000_ts_sc_list[] =
-{
-    {10, 0x00},
-    {100, 0x01},
-    {kHz(1), 0x02},
-    {kHz(5), 0x03},
-    {kHz(9), 0x04},
-    {kHz(10), 0x05},
-    {12500, 0x06},
-    {kHz(20), 0x07},
-    {kHz(25), 0x08},
-    {kHz(100), 0x09},
-    {MHz(1), 0x10},
     {0, 0},
 };
 
@@ -366,20 +340,6 @@ const struct ts_sc_list ic7200_ts_sc_list[] =
     {0, 0},
 };
 
-const struct ts_sc_list ic7300_ts_sc_list[] =
-{
-    {1, 0x00},            /* Manual says "Send/read the tuning step OFF" */
-    {100, 0x01},
-    {kHz(1), 0x02},
-    {kHz(5), 0x03},
-    {kHz(9), 0x04},
-    {kHz(10), 0x05},
-    {kHz(12.5), 0x06},
-    {kHz(20), 0x07},
-    {kHz(25), 0x08},
-    {0, 0},
-};
-
 const struct ts_sc_list ic910_ts_sc_list[] =
 {
     {Hz(1), 0x00},
@@ -393,62 +353,6 @@ const struct ts_sc_list ic910_ts_sc_list[] =
     {kHz(12.5), 0x08},
     {kHz(20), 0x09},
     {kHz(25), 0x10},
-    {kHz(100), 0x11},
-    {0, 0},
-};
-
-const struct ts_sc_list r8600_ts_sc_list[] =
-{
-    {10, 0x00},
-    {100, 0x01},
-    {kHz(1), 0x02},
-    {kHz(2.5), 0x03},
-    {3125, 0x04},
-    {kHz(5), 0x05},
-    {6250, 0x06},
-    {8330, 0x07},
-    {kHz(9), 0x08},
-    {kHz(10), 0x09},
-    {kHz(12.5), 0x10},
-    {kHz(20), 0x11},
-    {kHz(25), 0x12},
-    {kHz(100), 0x13},
-    {0, 0x14},            /* programmable tuning step not supported */
-    {0, 0},
-};
-
-const struct ts_sc_list ic705_ts_sc_list[] =
-{
-    {10, 0x00},
-    {100, 0x01},
-    {500, 0x02},
-    {kHz(1), 0x03},
-    {kHz(5), 0x04},
-    {kHz(6.25), 0x05},
-    {kHz(8.33), 0x06},
-    {kHz(9), 0x07},
-    {kHz(10), 0x08},
-    {kHz(12.5), 0x09},
-    {kHz(20), 0x10},
-    {kHz(25), 0x11},
-    {kHz(50), 0x12},
-    {kHz(100), 0x13},
-    {0, 0},
-};
-
-const struct ts_sc_list ic9700_ts_sc_list[] =
-{
-    {10, 0x00},
-    {100, 0x01},
-    {500, 0x02},
-    {kHz(1), 0x03},
-    {kHz(5), 0x04},
-    {kHz(6.25), 0x05},
-    {kHz(10), 0x06},
-    {kHz(12.5), 0x07},
-    {kHz(20), 0x08},
-    {kHz(25), 0x09},
-    {kHz(50), 0x10},
     {kHz(100), 0x11},
     {0, 0},
 };

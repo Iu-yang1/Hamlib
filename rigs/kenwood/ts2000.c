@@ -91,7 +91,7 @@
 /*
  * 38 CTCSS sub-audible tones + 1750 tone
  */
-tone_t ts2000_ctcss_list[] =
+static tone_t ts2000_ctcss_list[] =
 {
     670,  719,  744,  770,  797,  825,  854,  885,  915,  948,
     974, 1000, 1035, 1072, 1109, 1148, 1188, 1230, 1273, 1318,
@@ -103,7 +103,7 @@ tone_t ts2000_ctcss_list[] =
 /*
  * 103 available DCS codes
  */
-tone_t ts2000_dcs_list[] =
+static tone_t ts2000_dcs_list[] =
 {
     23,  25,  26,  31,   32,  36,  43,  47,       51,  53,
     54,  65,  71,  72,  73,   74, 114, 115, 116, 122, 125, 131,
@@ -117,7 +117,7 @@ tone_t ts2000_dcs_list[] =
     0,
 };
 
-int ts2000_ext_tokens[] =
+static int ts2000_ext_tokens[] =
 {
     TOK_FUNC_NOISE_REDUCTION_2, TOK_FUNC_FILTER_WIDTH_DATA,
     TOK_LEVEL_DSP_RX_EQUALIZER, TOK_LEVEL_DSP_TX_EQUALIZER, TOK_LEVEL_DSP_TX_BANDWIDTH,
@@ -125,7 +125,7 @@ int ts2000_ext_tokens[] =
     TOK_BACKEND_NONE,
 };
 
-const struct confparams ts2000_ext_funcs[] =
+static const struct confparams ts2000_ext_funcs[] =
 {
     {
         TOK_FUNC_NOISE_REDUCTION_2, "NR2", "Noise reduction 2", "Noise reduction 2",
@@ -134,7 +134,7 @@ const struct confparams ts2000_ext_funcs[] =
     { RIG_CONF_END, NULL, }
 };
 
-const struct confparams ts2000_ext_levels[] =
+static const struct confparams ts2000_ext_levels[] =
 {
     {
         TOK_LEVEL_DSP_RX_EQUALIZER, "DSP_RX_EQUALIZER", "DSP RX equalizer", "DSP RX equalizer type",

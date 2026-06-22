@@ -1101,6 +1101,7 @@ struct rig_caps ftx1_caps = {
         {1, 99, RIG_MTYPE_MEM, NEWCAT_MEM_CAP},
         {100, 117, RIG_MTYPE_EDGE, NEWCAT_MEM_CAP},  /* PMS */
         {500, 503, RIG_MTYPE_MEM, NEWCAT_MEM_CAP},  /* 60m */
+        {  1,   5, RIG_MTYPE_VOICE},
         RIG_CHAN_END,
     },
     /* FTX-1 uses MAIN/SUB VFOs, not A/B. This ensures vfo_fixup() preserves
@@ -1232,6 +1233,7 @@ struct rig_caps ftx1_caps = {
     .stop_morse = ftx1_stop_morse_func,
     .wait_morse = ftx1_wait_morse_func,
     .send_voice_mem = newcat_send_voice_mem,
+    .stop_voice_mem = newcat_stop_voice_mem,
     .set_clock = newcat_set_clock,
     .get_clock = newcat_get_clock,
     .set_trn = ftx1_set_trn_func,

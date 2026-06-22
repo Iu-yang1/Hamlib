@@ -11094,6 +11094,11 @@ int newcat_send_voice_mem(RIG *rig, vfo_t vfo, int ch)
     RETURNFUNC2(newcat_set_cmd(rig));
 }
 
+int newcat_stop_voice_mem(RIG *rig, vfo_t vfo)
+{
+    return newcat_send_voice_mem(rig, vfo, 0);
+}
+
 static int newcat_set_clarifier(RIG *rig, vfo_t vfo, int rx, int tx)
 {
     struct newcat_priv_data *priv = (struct newcat_priv_data *)STATE(rig)->priv;

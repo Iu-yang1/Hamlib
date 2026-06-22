@@ -429,6 +429,7 @@ struct rig_caps ft991_caps =
     .wait_morse =         rig_wait_morse,
     .scan =               newcat_scan,
     .send_voice_mem =     newcat_send_voice_mem,
+    .stop_voice_mem =     newcat_stop_voice_mem,
     .set_clock =          newcat_set_clock,
     .get_clock =          newcat_get_clock,
     .morse_qsize =        50,

@@ -105,7 +105,7 @@
 #define TOK_LEVEL_DSP_TX_SSB_DATA_LOW_CUT_FILTER TOKEN_BACKEND(117)
 #define TOK_LEVEL_DSP_TX_SSB_DATA_HIGH_CUT_FILTER TOKEN_BACKEND(118)
 
-int ts590_ext_tokens[] =
+static int ts590_ext_tokens[] =
 {
     TOK_FUNC_NOISE_REDUCTION_2,
     TOK_LEVEL_DSP_RX_EQUALIZER, TOK_LEVEL_DSP_TX_EQUALIZER,
@@ -118,7 +118,7 @@ int ts590_ext_tokens[] =
     TOK_BACKEND_NONE,
 };
 
-const struct confparams ts590_ext_funcs[] =
+static const struct confparams ts590_ext_funcs[] =
 {
     {
         TOK_FUNC_NOISE_REDUCTION_2, "NR2", "Noise reduction 2", "Noise reduction 2",
@@ -127,7 +127,7 @@ const struct confparams ts590_ext_funcs[] =
     { RIG_CONF_END, NULL, }
 };
 
-const struct confparams ts590_ext_levels[] =
+static const struct confparams ts590_ext_levels[] =
 {
     {
         TOK_LEVEL_DSP_RX_EQUALIZER, "DSP_RX_EQUALIZER", "DSP RX equalizer", "DSP RX equalizer type",

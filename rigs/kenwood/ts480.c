@@ -97,7 +97,7 @@
 #define TOK_LEVEL_DIGITAL_NOISE_LIMITER TOKEN_BACKEND(111)
 #define TOK_FUNC_CW_IF_FOR_SSB_RX TOKEN_BACKEND(112)
 
-int ts480_ext_tokens[] =
+static int ts480_ext_tokens[] =
 {
     TOK_FUNC_NOISE_REDUCTION_2, TOK_FUNC_FILTER_WIDTH_DATA, TOK_FUNC_TX_AUDIO_FROM_DATA_INPUT,
     TOK_LEVEL_DSP_RX_EQUALIZER, TOK_LEVEL_DSP_TX_EQUALIZER, TOK_LEVEL_DSP_TX_BANDWIDTH,
@@ -107,7 +107,7 @@ int ts480_ext_tokens[] =
     TOK_BACKEND_NONE,
 };
 
-const struct confparams ts480_ext_funcs[] =
+static const struct confparams ts480_ext_funcs[] =
 {
     {
         TOK_FUNC_NOISE_REDUCTION_2, "NR2", "Noise reduction 2", "Noise reduction 2",
@@ -128,7 +128,7 @@ const struct confparams ts480_ext_funcs[] =
     { RIG_CONF_END, NULL, }
 };
 
-const struct confparams ts480_ext_levels[] =
+static const struct confparams ts480_ext_levels[] =
 {
     {
         TOK_LEVEL_DIGITAL_NOISE_LIMITER, "DIGITAL_NOISE_LIMITER", "Digital Noise Limiter", "Digital Noise Limiter",
