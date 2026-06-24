@@ -998,19 +998,19 @@ int kenwood_open(RIG *rig)
         rig_debug(RIG_DEBUG_TRACE, "%s: got ID so try PS\n", __func__);
         err = rig_get_powerstat(rig, &powerstat);
 
-        if (err == RIG_OK && powerstat == 0 && priv->poweron == 0
+        if (err == RIG_OK && powerstat == 0 && !priv->poweron
                 && STATE(rig)->auto_power_on)
         {
-            priv->has_ps = 1;
+            priv->has_ps = true;
             rig_debug(RIG_DEBUG_TRACE, "%s: got PS0 so powerup\n", __func__);
             rig_set_powerstat(rig, 1);
         }
         else if (err == -RIG_ETIMEOUT) // Some rigs like TS-450 don't have PS cmd
         {
-            priv->has_ps = 0;
+            priv->has_ps = false;
         }
 
-        priv->poweron = 1;
+        priv->poweron = true;
 
         err = RIG_OK;  // reset our err back to OK for later checks
     }
@@ -1228,7 +1228,7 @@ int kenwood_close(RIG *rig)
 
     ENTERFUNC;
 
-    if (priv->poweron == 0) { RETURNFUNC(RIG_OK); } // nothing to do
+    if (!priv->poweron) { RETURNFUNC(RIG_OK); } // nothing to do
 
     if (!no_restore_ai && priv->trn_state >= 0)
     {
