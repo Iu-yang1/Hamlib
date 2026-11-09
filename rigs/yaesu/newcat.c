@@ -10545,6 +10545,9 @@ int newcat_get_cmd(RIG *rig)
          * Other Yaesu models retain the existing legacy prefix policy.
          */
         if (is_ftdx10
+            && (strncmp(priv->cmd_str, "EX", 2) == 0
+                || strncmp(priv->cmd_str, "CO", 2) == 0
+                || strncmp(priv->cmd_str, "RF", 2) == 0)
             && !ftdx10_cat_query_reply_matches(priv->cmd_str, priv->ret_data))
         {
             rig_debug(RIG_DEBUG_ERR, "%s: FTDX10 unrelated CAT reply '%s' for '%s'\n",
