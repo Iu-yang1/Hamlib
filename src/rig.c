@@ -8983,6 +8983,12 @@ HAMLIB_EXPORT(int) rig_send_raw(RIG *rig, const unsigned char *send,
             // TODO: error handling? can writing to a pipe really fail in ways we can recover from?
             rig_debug(RIG_DEBUG_ERR, "%s: write_block_sync() failed, result=%d\n", __func__,
                       retval);
+            if (strict_ftdx10_raw) {
+                rig_flush_force(rp, 1);
+                set_transaction_inactive(rig);
+                ELAPSED2;
+                RETURNFUNC(retval);
+            }
         }
     }
 
