@@ -25,6 +25,12 @@ static inline int ftdx10_cat_query_reply_matches(const char *query, const char *
         || query[query_length - 1] != ';'
         || reply[reply_length - 1] != ';') return 0;
 
+    /* Only one complete CAT frame may be associated with this command. */
+    for (size_t i = 0; i + 1 < reply_length; ++i) {
+        if (reply[i] == ';' || (unsigned char)reply[i] < 32
+            || (unsigned char)reply[i] > 126) return 0;
+    }
+
     discriminator_length = 2;
     if (strncmp(query, "EX", 2) == 0 || strncmp(query, "CO", 2) == 0
         || strncmp(query, "RF", 2) == 0) {
