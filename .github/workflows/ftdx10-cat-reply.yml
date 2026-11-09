@@ -1,0 +1,25 @@
+name: FTDX10 CAT reply association
+on:
+  push:
+    paths:
+      - 'rigs/yaesu/ftdx10_cat_reply.h'
+      - 'rigs/yaesu/newcat.c'
+      - 'rigs/yaesu/Makefile.am'
+      - 'tests/ftdx10_cat_reply_test.c'
+      - '.github/workflows/ftdx10-cat-reply.yml'
+  pull_request:
+    paths:
+      - 'rigs/yaesu/ftdx10_cat_reply.h'
+      - 'rigs/yaesu/newcat.c'
+      - 'rigs/yaesu/Makefile.am'
+      - 'tests/ftdx10_cat_reply_test.c'
+jobs:
+  cat-reply-unit:
+    name: Native C command-discriminator regression
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile with strict warnings
+        run: cc -std=c11 -Wall -Wextra -Werror -pedantic -o /tmp/ftdx10_cat_reply_test tests/ftdx10_cat_reply_test.c
+      - name: Run native unit tests
+        run: /tmp/ftdx10_cat_reply_test
