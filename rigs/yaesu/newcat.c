@@ -10549,7 +10549,7 @@ int newcat_get_cmd(RIG *rig)
         {
             rig_debug(RIG_DEBUG_ERR, "%s: FTDX10 unrelated CAT reply '%s' for '%s'\n",
                       __func__, priv->ret_data, priv->cmd_str);
-            rig_flush_force(rp, 1);
+            rig_flush(rp);
             RETURNFUNC(-RIG_EPROTO);
         }
 
