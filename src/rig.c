@@ -74,6 +74,7 @@
 #include "hamlibdatetime.h"
 #include "cache.h"
 #include "stream.h"
+#include "../rigs/yaesu/ftdx10_cat_reply.h"
 
 /**
  * \brief Hamlib short license name
@@ -8946,6 +8947,15 @@ HAMLIB_EXPORT(int) rig_send_raw(RIG *rig, const unsigned char *send,
     int simulate = rig->caps->rig_model == RIG_MODEL_DUMMY ||
                    rig->caps->rig_model == RIG_MODEL_NONE ||
                    rp->rig == RIG_PORT_NONE;
+    /* Only FTDX10 ASCII EX/CO/RF queries, not binary raw rig traffic.
+     * This is the underlying native path of node-hamlib's sendRaw(). */
+    int strict_ftdx10_raw = !simulate && reply && term && *term == ';'
+        && send && send_len >= 3 && send_len < 64
+        && send[send_len - 1] == ';'
+        && rig->caps->rig_model == RIG_MODEL_FTDX10
+        && ((send[0] == 'E' && send[1] == 'X')
+            || (send[0] == 'C' && send[1] == 'O')
+            || (send[0] == 'R' && send[1] == 'F'));
     ENTERFUNC;
 
     ELAPSED1;
@@ -8953,6 +8963,10 @@ HAMLIB_EXPORT(int) rig_send_raw(RIG *rig, const unsigned char *send,
     rig_debug(RIG_DEBUG_VERBOSE, "%s: writing %d bytes\n", __func__, send_len);
 
     set_transaction_active(rig);
+
+    /* Drop pending previous CAT frames before starting a new query. We still
+     * cannot identify a later identical-register reply without a CAT nonce. */
+    if (strict_ftdx10_raw) rig_flush_force(rp, 1);
 
     if (simulate)
     {
@@ -8969,6 +8983,12 @@ HAMLIB_EXPORT(int) rig_send_raw(RIG *rig, const unsigned char *send,
             // TODO: error handling? can writing to a pipe really fail in ways we can recover from?
             rig_debug(RIG_DEBUG_ERR, "%s: write_block_sync() failed, result=%d\n", __func__,
                       retval);
+            if (strict_ftdx10_raw) {
+                rig_flush_force(rp, 1);
+                set_transaction_inactive(rig);
+                ELAPSED2;
+                RETURNFUNC(retval);
+            }
         }
     }
 
@@ -9034,6 +9054,30 @@ HAMLIB_EXPORT(int) rig_send_raw(RIG *rig, const unsigned char *send,
             }
         }
 
+        if (strict_ftdx10_raw)
+        {
+            char query[64], observed[201];
+            if (nbytes <= 0 || nbytes >= (int)sizeof(observed))
+            {
+                rig_flush_force(rp, 1);
+                set_transaction_inactive(rig);
+                ELAPSED2;
+                RETURNFUNC(-RIG_EPROTO);
+            }
+            memcpy(query, send, (size_t)send_len);
+            query[send_len] = '\0';
+            memcpy(observed, buf, (size_t)nbytes);
+            observed[nbytes] = '\0';
+            if (!ftdx10_cat_query_reply_matches(query, observed))
+            {
+                rig_debug(RIG_DEBUG_ERR, "%s: FTDX10 raw query '%s' got unrelated reply '%s'\n",
+                          __func__, query, observed);
+                rig_flush_force(rp, 1);
+                set_transaction_inactive(rig);
+                ELAPSED2;
+                RETURNFUNC(-RIG_EPROTO);
+            }
+        }
         memcpy(reply, buf, nbytes);
     }
     else
