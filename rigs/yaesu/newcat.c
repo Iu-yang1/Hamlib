@@ -10329,6 +10329,12 @@ int newcat_get_cmd(RIG *rig)
     int rc = -RIG_EPROTO;
     int is_read_cmd = 0;
     int is_power_status_cmd = strncmp(priv->cmd_str, "PS", 2) == 0;
+    /* No retry after a potentially delayed response from the same EX/CO/RF
+     * register. FTDX10 CAT has no per-request transaction identifier. */
+    int strict_ftdx10_query = is_ftdx10 &&
+        (strncmp(priv->cmd_str, "EX", 2) == 0 ||
+         strncmp(priv->cmd_str, "CO", 2) == 0 ||
+         strncmp(priv->cmd_str, "RF", 2) == 0);
 
     ENTERFUNC;
     priv->ret_data[0] = 0;  // ensure zero-length ret_data by default
@@ -10441,6 +10447,10 @@ int newcat_get_cmd(RIG *rig)
                               sizeof(priv->ret_data),
                               &cat_term, sizeof(cat_term), 0, 1)) <= 0)
         {
+            if (strict_ftdx10_query) {
+                rig_flush(rp);
+                RETURNFUNC(rc < 0 ? rc : -RIG_EPROTO);
+            }
             // if we get a timeout from PS probably means power is off
             if (rc == -RIG_ETIMEOUT && is_power_status_cmd)
             {
@@ -10499,6 +10509,10 @@ int newcat_get_cmd(RIG *rig)
                 break;            /* retry */
 
             case '?':
+                if (strict_ftdx10_query) {
+                    rig_flush(rp);
+                    RETURNFUNC(-RIG_ERJCTED);
+                }
 
                 /* The ? response is ambiguous and undocumented by Yaesu, but for get commands it seems to
                  * indicate that the rig rejected the command because the state of the rig is not valid for the command
